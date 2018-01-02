@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/imgCover"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        fresco:viewAspectRatio="0.75"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImageScaleType="fitCenter"
+        fresco:placeholderImage="@color/wait_color"/>
+
+    <TextView android:id="@+id/txtName"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Still Here"
+        android:textStyle="bold"
+        android:textSize="17sp"/>
+
+    <TextView android:id="@+id/txtAuthor"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="by Lara Vapnyar"
+        android:textStyle="italic"
+        android:textSize="13sp"/>
+
+</LinearLayout>
