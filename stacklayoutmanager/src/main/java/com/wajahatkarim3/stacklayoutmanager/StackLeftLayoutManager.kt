@@ -44,7 +44,15 @@ class StackLeftLayoutManager(private var ratio: Float, private var scale: Float)
         return scrollOffset - pendingScrollOffset + dx
     }
 
-    protected fun getFixedScrollPosition(direction: Int, value: Float) : Int
+    override fun scrollToPosition(position: Int) {
+        if (position > 0 && position < itemCount)
+        {
+            scrollOffset = itemWidth * ((itemCount - 1 - position) + 1)
+            requestLayout()
+        }
+    }
+
+    public fun getFixedScrollPosition(direction: Int, value: Float) : Int
     {
         if (containsChild)
         {
@@ -55,6 +63,12 @@ class StackLeftLayoutManager(private var ratio: Float, private var scale: Float)
             return getAdapterPosition(layoutPos-1)
         }
         return RecyclerView.NO_POSITION
+    }
+
+    public fun calculateDistanceToPosition(target: Int) : Int
+    {
+        var pendingScrollOffset = itemWidth * (itemCount - target)
+        return pendingScrollOffset - scrollOffset
     }
 
     protected fun fillAllItems(recycler: RecyclerView.Recycler?)
