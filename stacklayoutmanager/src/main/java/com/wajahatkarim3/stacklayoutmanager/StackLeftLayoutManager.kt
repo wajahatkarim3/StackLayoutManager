@@ -1,6 +1,7 @@
 package com.wajahatkarim3.stacklayoutmanager
 
 import android.support.v7.widget.RecyclerView
+import android.view.View
 
 /**
  * @author Wajahat Karim
@@ -53,6 +54,67 @@ class StackLeftLayoutManager(private var ratio: Float, private var scale: Float)
         val offsetPercent = itemVisibleSize / itemWidth
         val exactWidth = width - paddingLeft - paddingRight
 
+        var itemModelsList = arrayListOf<ItemModel>()
+        var j = 1
+        var remainingWidth = exactWidth - itemWidth
+
+        for (i in bottomItemPos-1 downTo 0 )
+        {
+            var maxOffset = (width - paddingLeft - paddingRight - itemWidth) / 2 * Math.pow(scale.toDouble(), j.toDouble())
+            var start = (remainingWidth - offsetPercent * maxOffset).toInt()
+            var model = ItemModel(
+                    top = start,
+                    scale = (Math.pow(scale.toDouble(), j-1.toDouble()) * (1 - offsetPercent * (1 - scale))).toFloat(),
+                    offset = offsetPercent.toFloat(),
+                    percent = start / exactWidth.toFloat() )
+            itemModelsList.add(0, model)
+
+            remainingWidth -= maxOffset.toInt()
+            if (remainingWidth <= 0)
+            {
+                model.top = (remainingWidth + maxOffset).toInt()
+                model.offset = 0f
+                model.percent = (model.top / exactWidth).toFloat()
+                model.scale = Math.pow(scale.toDouble(), (j-1).toDouble()).toFloat()
+                break
+            }
+
+            j++
+        }
+
+        if (bottomItemPos < itemCount)
+        {
+            val start = exactWidth - itemVisibleSize
+            itemModelsList.add(ItemModel(
+                    top = start,
+                    scale = 1f,
+                    offset = (itemVisibleSize / itemWidth).toFloat(),
+                    percent = (start / exactWidth).toFloat()
+            ).setBottom())
+        }
+        else
+        {
+            bottomItemPos -= 1
+        }
+
+        var modelsCount = itemModelsList.size
+
+        val startPos = bottomItemPos - (modelsCount - 1)
+        val endPos = bottomItemPos
+        for (i in childCount-1 downTo 0)
+        {
+            var childView = getChildAt(i)
+            var pos = itemCount - 1 - getPosition(childView)
+            if (pos > endPos || pos < startPos)
+                removeAndRecycleView(childView, recycler)
+        }
+        detachAndScrapAttachedViews(recycler)
+
+        for (i in 0 until modelsCount)
+            fillChildItem(recycler?.getViewForPosition(getAdapterPosition(startPos+i)), itemModelsList[i])
+    }
+
+    private fun fillChildItem(viewForPosition: View?, itemModel: ItemModel) {
 
     }
 
