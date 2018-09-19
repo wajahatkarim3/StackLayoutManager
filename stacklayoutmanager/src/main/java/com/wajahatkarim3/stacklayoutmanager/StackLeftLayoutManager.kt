@@ -1,5 +1,6 @@
 package com.wajahatkarim3.stacklayoutmanager
 
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 
@@ -32,6 +33,15 @@ class StackLeftLayoutManager(private var ratio: Float, private var scale: Float)
 
         scrollOffset = calculateScrollOffset(scrollOffset)
         fillAllItems(recycler)
+    }
+
+    override fun canScrollHorizontally(): Boolean = true
+
+    override fun scrollHorizontallyBy(dx: Int, recycler: RecyclerView.Recycler?, state: RecyclerView.State?): Int {
+        var pendingScrollOffset = scrollOffset + dx
+        scrollOffset = calculateScrollOffset(pendingScrollOffset)
+        fillAllItems(recycler)
+        return scrollOffset - pendingScrollOffset + dx
     }
 
     protected fun getFixedScrollPosition(direction: Int, value: Float) : Int
@@ -114,15 +124,30 @@ class StackLeftLayoutManager(private var ratio: Float, private var scale: Float)
             fillChildItem(recycler?.getViewForPosition(getAdapterPosition(startPos+i)), itemModelsList[i])
     }
 
-    private fun fillChildItem(viewForPosition: View?, itemModel: ItemModel) {
+    private fun fillChildItem(view: View?, itemModel: ItemModel)
+    {
+        addView(view)
+        calculateChildExactSize(view)
+        val fixScale = itemWidth * (1 - itemModel.scale) / 2
+        val top = paddingTop
+        layoutDecoratedWithMargins(view, (itemModel.top - fixScale).toInt(), top, (itemModel.top + itemWidth - fixScale).toInt(), top + itemWidth)
+        view?.scaleX = itemModel.scale
+        view?.scaleY = itemModel.scale
+    }
 
+    private fun calculateChildExactSize(view: View?)
+    {
+        var layoutParams = view?.layoutParams as RecyclerView.LayoutParams
+        val widthSpec = View.MeasureSpec.makeMeasureSpec(itemWidth - layoutParams.leftMargin - layoutParams.rightMargin, View.MeasureSpec.EXACTLY)
+        val heightSpec = View.MeasureSpec.makeMeasureSpec(itemHeight - layoutParams.topMargin - layoutParams.bottomMargin, View.MeasureSpec.EXACTLY)
+        view?.measure(widthSpec, heightSpec)
     }
 
     protected fun calculateScrollOffset(offset: Int) : Int =
             Math.min(Math.max(itemWidth, offset), itemCount * itemWidth)
 
     private fun getAdapterPosition(position: Int): Int {
-        return 0
+        return itemCount - 1 - position
     }
 
     private data class ItemModel (
