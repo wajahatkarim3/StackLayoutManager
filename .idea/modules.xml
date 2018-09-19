@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/StackLayoutManager.iml" filepath="$PROJECT_DIR$/StackLayoutManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/slm.iml" filepath="$PROJECT_DIR$/slm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stacklayoutmanager/stacklayoutmanager.iml" filepath="$PROJECT_DIR$/stacklayoutmanager/stacklayoutmanager.iml" />
       <module fileurl="file://$PROJECT_DIR$/stacklayoutmanager/stacklayoutmanager.iml" filepath="$PROJECT_DIR$/stacklayoutmanager/stacklayoutmanager.iml" />
     </modules>
   </component>
