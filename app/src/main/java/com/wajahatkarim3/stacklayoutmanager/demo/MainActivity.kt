@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import com.wajahatkarim3.stacklayoutmanager.StackLayoutManager
+import com.wajahatkarim3.stacklayoutmanager.StackLeftLayoutManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,11 +26,13 @@ class MainActivity : AppCompatActivity() {
         recyclerRecommended = findViewById(R.id.recyclerRecommended)
         recommededAdapter = BookStackAdapter()
 
-        var layoutManager = StackLayoutManager(1f, 1.85f, StackLayoutManager.HORIZONTAL)
-        layoutManager.setChildDecorateHelper(StackLayoutManager.DefaultChildDecorateHelper(resources.getDimension(R.dimen.item_max_elevation)))
-        layoutManager.setChildPeekSize( (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                30f, getResources().getDisplayMetrics())).toInt())
-        layoutManager.setMaxItemLayoutCount(5)
+        //var layoutManager = StackLayoutManager(1f, 1.85f, StackLayoutManager.HORIZONTAL)
+        //layoutManager.setChildDecorateHelper(StackLayoutManager.DefaultChildDecorateHelper(resources.getDimension(R.dimen.item_max_elevation)))
+        //layoutManager.setChildPeekSize( (TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+        //        30f, getResources().getDisplayMetrics())).toInt())
+        //layoutManager.setMaxItemLayoutCount(5)
+
+        var layoutManager = StackLeftLayoutManager(1.5f, 0.85f)
         recyclerRecommended.layoutManager = layoutManager
 
         recyclerRecommended.adapter = recommededAdapter
