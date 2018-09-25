@@ -52,6 +52,11 @@ class StackLeftLayoutManager(private var ratio: Float, private var scale: Float)
         }
     }
 
+    override fun onAttachedToWindow(view: RecyclerView?) {
+        super.onAttachedToWindow(view)
+        snapHelper.attachToRecyclerView(view)
+    }
+
     public fun getFixedScrollPosition(direction: Int, value: Float) : Int
     {
         if (containsChild)

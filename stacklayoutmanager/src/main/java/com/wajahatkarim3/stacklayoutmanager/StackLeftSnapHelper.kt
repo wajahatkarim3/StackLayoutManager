@@ -15,7 +15,7 @@ class StackLeftSnapHelper : SnapHelper() {
     {
         if (layoutManager is StackLeftLayoutManager)
         {
-            var out = intArrayOf(2)
+            var out = intArrayOf(0,0)
             if (layoutManager.canScrollHorizontally())
             {
                 out[0] = layoutManager.calculateDistanceToPosition(layoutManager.getPosition(targetView))
